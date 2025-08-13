@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>購入画面</title>
+    <meta name="format-detection" content="email=no,telephone=no,address=no">
+    <meta name="robots" content="noindex,nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <div class="hedaer_inner">
+        <a href=#><h1 class="purchase_h1"></h1></a>
+        <strong>戻ってカート操作をされましたら<br>ページ更新をしてからご購入ください</strong>
+    </div>
+</header>
+<main>
+    <section class="purchase">
+        <h2 class="purchase_h2">カートの中身</h2>
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>ミルクレープ</h3>
+            <p>&yen;600</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>ショートケーキ(ホール)</h3>
+            <p>&yen;3,500</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>>アニバーサリーケーキ</h3>
+            <p>&yen;1,200</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>クッキー</h3>
+            <p>&yen;400</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>季節のキャンディー</h3>
+            <p>&yen;500</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_item">
+            <div class="item_img"></div>
+            <h3>モンブラン</h3>
+            <p>&yen;800</p>
+            <p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_text_flex">
+            <div class="space"></div><h3>個数合計</h3><p class="p1"></p><p class="ko" style="display: none;">個</p>
+        </div>
+
+        <div class="purchase_text_flex">
+            <div class="space"></div><h3>金額合計(税込み)</h3><p class="p1"></p><p class="ko" style="display: none;">円</p>
+        </div>
+
+        <br><br><br>
+        <p class="text_center none2">下記注意事項をご確認の上、☑をお願いいたします。</p>
+        <br>
+        <p class="caution none2"><small>
+            ※商品ページに発送日についての記載がある一部商品を除き、ご注文の翌日から3営業日以内(土日祝を除く)で出荷いたします。<br><br>
+            ※お住まいの地域によってはご注文時に配送希望日・配送時間帯をご指定いただいてもご指定日時にお届けできない場合もございます。<br><br>
+            ※ギフト向けのラッピングサービスや熨斗の対応は行なっておりません。<br><br>
+            ※すべてのご注文において金額がわかるものや明細書(納品書)は同梱しておりません。<br><br>
+        </small></p>
+        <br>
+
+        <form id="sendForm" action="/submit" method="post" class="none2">
+            <div class="check_block">
+                <input type="checkbox" name="check" style="width: 32px; height: 32px;" required>&ensp;上記事項を確認しました<span>(必須)</span>
+            </div>
+            <br><br>
+            <p class="text_center">ご送付先の情報をご入力をお願いいたします。<br>最後のコメント欄以外<span>(必須)</span>です。</p>
+            <br><br>
+            ご送付先名&ensp;<input type="text" name="name" style="width: 250.5px; height: 32px;" required>
+            <br><br>
+            メールアドレス&ensp;<input type="email" name="email" placeholder="@を含む半角英数字" style="width: 222px; height: 32px;" required>
+            <br><br>
+            お電話番号&ensp;<input type="tel" name="tel" placeholder="半角数字(ハイフン省略可)" style="width: 250.5px; height: 32px;" required>
+            <br><br>
+            送付先ご住所：<br>
+            &emsp;<label for="zipcode">郵便番号</label>
+            <input type="number" name="zipcode" id="zipcode" placeholder="例：1000001(半角数字)" style="height: 32px; margin-bottom: 8px;" required pattern="\d{7}">
+            <br>
+            &emsp;<label for="prefecture">都道府県</label>
+            <select name="prefecture" id="prefecture" style="height: 32px; margin-bottom: 8px;" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="北海道">北海道</option>
+                <option value="青森県">青森県</option>
+                <option value="岩手県">岩手県</option>
+                <option value="宮城県">宮城県</option>
+                <option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option>
+                <option value="福島県">福島県</option>
+                <option value="茨城県">茨城県</option>
+                <option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option>
+                <option value="埼玉県">埼玉県</option>
+                <option value="千葉県">千葉県</option>
+                <option value="東京都">東京都</option>
+                <option value="神奈川県">神奈川県</option>
+                <option value="新潟県">新潟県</option>
+                <option value="富山県">富山県</option>
+                <option value="石川県">石川県</option>
+                <option value="福井県">福井県</option>
+                <option value="山梨県">山梨県</option>
+                <option value="長野県">長野県</option>
+                <option value="岐阜県">岐阜県</option>
+                <option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option>
+                <option value="三重県">三重県</option>
+                <option value="滋賀県">滋賀県</option>
+                <option value="京都府">京都府</option>
+                <option value="大阪府" selected>大阪府</option>
+                <option value="兵庫県">兵庫県</option>
+                <option value="奈良県">奈良県</option>
+                <option value="和歌山県">和歌山県</option>
+                <option value="鳥取県">鳥取県</option>
+                <option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option>
+                <option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
+                <option value="徳島県">徳島県</option>
+                <option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option>
+                <option value="高知県">高知県</option>
+                <option value="福岡県">福岡県</option>
+                <option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option>
+                <option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option>
+                <option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option>
+                <option value="沖縄県">沖縄県</option>
+            </select>
+            <br>
+            &emsp;市区町村&ensp;<input type="text" name="city" style="width: 250.5px; height: 32px; margin-bottom: 8px;" required>
+            <br>
+            &emsp;丁目番地&ensp;<input type="text" name="address1" style="width: 250.5px; height: 32px; margin-bottom: 8px;" required>
+            <br>
+            &emsp;建物号室&ensp;<input type="text" name="address2" style="width: 250.5px; height: 32px;" placeholder="ない場合は必須ではありません">
+            <br><br>
+            コメント・備考<br>
+            &emsp;<textarea name="address" style="width: 317.5px; height: 160px;" maxlength="500"></textarea>
+            <br><br>
+            <div class="form_flex">
+                <button type="reset" class="reset">リセット</button>
+                <button type="submit" class="submit">購入する</button>
+            </div>
+			<br>
+			<p class="info">※「購入する」より送信されたデータは<br>&emsp;Eclipseのコンソール画面に表示されます。<br>&emsp;これにてアプリの動作は終了です。<br>&emsp;ありがとうございました。</p>
+        </form>
+
+    </section>
+</main>
+<footer>
+    <small>&copy; SnackLab -お菓子のECサイト- All Rights Reserved.</small>
+</footer>
+<script src="/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+@charset "utf-8";
+html{
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 60px;
+}
+*,*::before,*::after{
+    margin: 0;
+    box-sizing: border-box;
+}
+:root{
+    --base:rgba(250, 250, 250, 1);/* ベース:60% */
+    --main:rgba(255, 228, 225, 1);/* メイン:30% */
+    --accent:rgba(255, 72, 94, .6);/* アクセント:10~15% */
+    --white:rgba(250, 250, 250, 1);/* 白(オフホワイト) */
+    --black: rgba(51, 51, 51, 1);/* 黒(ダークグレー。濃くてもグレーブラック(17,17,17)) */
+    --gothic: 'Kosugi Maru',"Yu Gothic", "游ゴシック体", "YuGothic", "Hiragino Kaku Gothic ProN", "メイリオ", "MS PGothic", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+/*== ふわっと出現 ==*/
+.fadein_fast,.fadein,.fadein_slow{
+    opacity: 0;
+    transform: translateY(20px);
+}
+.fadein_fast{
+    transition: all .5s ease;
+}
+.fadein{
+    transition: all 1s ease;
+}
+.fadein_slow{
+    transition: all 1.5s ease;
+}
+
+body{
+    margin: 0 auto;
+    padding: 0;
+    background: var(--base);
+    color: var(--black);
+    font-family: var(--gothic);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    text-align: center;
+    overflow-x: hidden;/*外にある「カートの中身」を隠す*/
+}
+a{
+    color: var(--black);
+    text-decoration: none;
+    display: inline-block; 
+    transition: .3s;
+}
+a:hover{
+    cursor: pointer;
+    color: var(--accent);
+}
+
+header{
+    width: 100%;
+    height: 60px;
+    background: var(--base);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+.hedaer_inner{
+    width: min(1280px,90%);
+    margin: 0 auto;	
+    display: flex;
+    justify-content: space-between;
+}
+h1{
+    width: 145px;
+    height: 60px;
+    background: url(/img/rogo.png) center / cover;
+}
+nav ul{
+    width: fit-content;
+    height: 60px;
+    display: flex;
+    gap: 8px;
+}
+nav li{
+    list-style: none;
+    padding-left: 0;
+}
+nav li a{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0); /* 透化 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav li:hover img{
+    filter: brightness(2.8);
+    transition: filter 0.25s ease;
+}
+
+.cart-icon{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border: none;
+    background-color: rgba(0, 0, 0, 0); /* 透化 */
+    z-index: 20;
+    padding: 4px 0 0;
+}
+/* カートの中身(スライド) */
+.cart-menu{
+    width: 324px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease;
+    position: fixed;
+    top: 0;
+    right: -332px; /* 最初は画面外 */
+    z-index: 10;
+}
+.cart-menu.open{
+    right: 0;
+}
+.cart-menu ul{
+    list-style: none;
+    padding-left: 0;
+}
+.cart_item_box{
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+.cart_item{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 14px;
+    text-align: left;
+}
+.name{
+    width: 164px;
+}
+.layout{
+    display: flex;
+    gap: 12px;
+}
+.layout button{
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 16px;
+    color: var(--white);;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 24px;
+    padding: 0;
+    border-radius: 50%;
+    border-style: none;
+    transition: background-color .4s, transform .4s;
+}
+.count{
+    width: 32px;
+    text-align: right;
+}
+.plus{
+    color: var(--white);
+    background-color: var(--accent);
+}
+.plus:hover{
+    background-color: rgb(222, 49, 99);
+}
+.minus{
+    background-color: rgba(225, 209, 27, 0.8);
+}
+.minus:hover{
+    background-color: rgba(204, 204, 0, 0.5);
+}
+.cart-icon img{
+    pointer-events: auto;
+}
+.cart-icon{
+    position: relative;
+    z-index: 30; /* cartMenuより上に */
+}
+.text_flex{
+    width: 100%;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+}
+h3{
+	width: 136px;
+	font-size: 16px;
+    font-weight: 400;
+	text-align: left;
+}
+.p1{
+	width: 80px;
+	text-align: right;
+}
+.ko{
+	width: 17px;
+}
+.checkout{
+    width: 200px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: var(--accent);
+    line-height: 32px;
+    text-align: center;
+    background: linear-gradient(90deg, #ff69b4 40%, rgba(235, 206, 142, 1) 100%);
+    border: solid 1px rgba(255, 105, 180, .2);
+    font-size: 16px;
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.4s;
+    box-shadow: 0 2px 4px rgba(255,182,193,0.18);
+    margin-bottom: 24px;
+}
+.checkout:hover,.submit:hover{
+    color: #f4e5e5;
+    background: linear-gradient(90deg, rgb(243, 197, 99) 40%, #f8479f 100%);
+    transform: scale(1.05);
+}
+.reset{
+    width: 200px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: var(--accent);
+    line-height: 32px;
+    background: linear-gradient(90deg, #656565 60%, #8a8a8a 100%);
+    border: solid 1px rgba(101, 101, 101, .2);
+    font-size: 16px;
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.4s;
+    box-shadow: 0 2px 84px rgba(255,182,193,0.18);
+}
+.reset:hover{
+    color: #ecdddd;
+    background: linear-gradient(90deg, #a2a2a2 40%, #494949 100%);
+    transform: scale(1.05);
+}
+
+main{
+    width: min(1280px,90%);
+    height: auto;
+    margin: 0 auto;
+}
+.mainvisual{
+    width: 100%;
+    height: calc(85vh - 60px);
+    background: url(/img/main.jpg) center / cover;
+    margin: 0 auto 90px;
+}
+h2{
+    font-size: clamp(20px,2.5vw,24px);
+    margin: 0 auto 32px;
+}
+.items{
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.item{
+    width: 360px;
+    height: auto;
+    margin-bottom: 120px;
+}
+.item_img{
+    width: 300px;
+    height: 300px;
+    background-position: center;
+    background-size: 100%;
+    transition: background-size 0.75s;
+    margin: 0 auto;
+}
+.item:nth-of-type(1) .item_img{
+    background-image: url(/img/millecrepe.jpg);
+}
+.item:nth-of-type(2) .item_img{
+    background-image: url(/img/shortcake.jpg);
+}
+.item:nth-of-type(3) .item_img{
+    background-image: url(/img/anniversary.jpg);
+}
+.item:nth-of-type(4) .item_img{
+    background-image: url(/img/cookie.jpg);
+}
+.item:nth-of-type(5) .item_img{
+    background-image: url(/img/candy.jpg);
+}
+.item:nth-of-type(6) .item_img{
+    background-image: url(/img/montblanc.jpg);
+}
+.item_img:hover{
+    background-size: 110%;
+}
+.item_text{
+    width: 300px;
+    height: auto;
+    aspect-ratio: 4/1;
+    text-align: left;
+    margin: 0 auto;
+}
+dt{
+    width: fit-content;
+    font-weight: 600;
+    background: linear-gradient(transparent 60%, rgb(245, 255, 133) 50%);
+}
+dd{
+    position: relative;
+    font-size: 16px;
+}
+dd p{
+    height: 50px;
+}
+.price{
+    font-size: 16px;
+}
+.cart{
+    width: 120px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 32px;
+    position: absolute;
+    right: 16px;
+    bottom: 0px;
+    background: linear-gradient(90deg, #ff69b4 60%, #ffb6c1 100%);
+    border: solid 1px rgba(255, 105, 180, .2);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.4s;
+    box-shadow: 0 2px 4px rgba(255,182,193,0.18);
+}
+.cart:hover{
+    background: linear-gradient(90deg, #ffb6c1 40%, #ff69b4 100%);
+    transform: scale(1.05);
+}
+.plus:active,
+.minus:active,
+.cart:active{
+    transform: scale(0.9);
+    transition: transform 0.1s;
+}
+.checkout:active,
+.reset:active,
+.cart:active{
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+footer{
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: var(--main);
+}
+small{
+    font-size: clamp(10px,2vw,13.3px);
+}
+
+/* レスポンシブ。iPhon最大(16ProMax)440px*/
+@media screen and (max-width:451px){
+    main{
+        width: 100%;
+    }
+    .mainvisual{
+        width: 100%;
+        height: auto;
+        aspect-ratio: 11/12;
+    }
+}
+
+/* ▼モーダルウィンドウのCSS */
+/* .modal01,.modal02,.modal03,.modal04,.modal05,.modal06 {
+    height: 100vh;} */
+.modal-outer{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s ease;
+}
+/* モーダル表示時に適用されるクラス */
+.modal-outer.show{
+    opacity: 1;
+    pointer-events: auto;
+}
+/* モーダルの中身 */
+.modal-inner{
+    width: 90%;
+    height: calc(90vh - 120px);
+    margin: 0 auto;
+    background-color: var(--base);
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform .4s ease, opacity .4s ease;
+    overflow-y: auto; /* 〇 スクロール可 */
+    overflow-x: hidden; /* 〇 横スクロール無効 */
+}
+/* モーダル表示時の中身 */
+.modal-outer.show .modal-inner{
+    transform: scale(1);
+    opacity: 1;
+}
+/* モーダルの中身の配置 */
+.modal-inner-container{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+.item_img_l{
+    width: max(50%,400px);
+    height: auto;
+    aspect-ratio: 4/3;
+}
+.modal01 .item_img_l{
+    background: url(/img/millecrepe_l.jpg) center / cover;
+}
+.modal02 .item_img_l{
+    background: url(/img/shortcake_l.jpg) center / cover;
+}
+.modal03 .item_img_l{
+    background: url(/img/anniversary_l.jpg) center / cover;
+}
+.modal04 .item_img_l{
+    background: url(/img/cookie_l.jpg) center / cover;
+}
+.modal05 .item_img_l{
+    background: url(/img/candy_l.jpg) center / cover;
+}
+.modal06 .item_img_l{
+    background: url(/img/montblanc_l.jpg) center / cover;
+}
+.modal_text{
+    width: 49%;
+    height: auto;
+    aspect-ratio: 4/3;
+    background-color: var(--base);
+    text-align: left;
+    margin: 0;
+}
+/* モーダルのヘッダー（閉じるボタン） */
+.close-btn{
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    background-color: rgba(0, 0, 0, 0); 
+    /* background-color: rgba(0, 0, 0, 0); 透化 */
+    border: none;
+    cursor: pointer;
+    display: block;
+    position: fixed;
+    top: 5%;
+    right: 5%;
+}
+@media screen and (max-width:982px){
+    .item_img_l{
+        width: 400px;
+    }
+    .modal_text{
+        width: calc(100% - 400px);
+    }
+}
+@media screen and (max-width:921px){
+    .modal-inner{
+        width: 80%;
+        height: 80vh;
+    }
+    .modal-inner-container{
+        width: fit-content;
+        gap: 0;
+        display: block;
+        margin: 0 auto;
+    }
+    .item_img_l{
+        margin: 0;
+    }
+    .modal_text{
+        width: fit-content;
+        height: 170px;
+        margin: 0;
+        text-align: left;
+    }
+    .none{
+        display: none;
+    }
+	.none2 {
+	    display: none !important;
+	}
+
+    dt{
+        margin: 8px auto 0;
+    }
+    dd p{
+        width: 400px;
+        margin: 0;
+        font-size: 14px;
+    }
+}
+@media screen and (max-width:571px){
+    .close-btn{
+        mix-blend-mode: difference;
+        opacity: 0.5;
+        top: 2%;
+        right: 2%;
+        position: fixed;
+        top: 3%;
+        right: 4%;
+        z-index: 10;
+    }
+    .modal-inner {
+        width: 90%;
+        height: 90vh;
+        padding: 5%;
+    }
+    .modal-inner-container{
+        width: 100%;
+    }
+    .item_img_l{
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        margin: 0 auto 8px;
+    }
+    .modal_text{
+        width: 100%;
+    }
+    dd p{
+        width: 100%;
+        letter-spacing: 0.028em;
+    }
+}
+
+/* purchasePage.htmlのcss */
+strong{
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(51, 51, 51);
+    text-align: bottom;
+    text-align: right;
+    position: relative;
+    top: 15px;
+}
+.purchase_h2{
+    height: 60px;
+    margin: 0 auto;
+}
+.purchase{
+    width: 100%;
+    height: auto;
+    padding: 120px 0 60px;
+    margin: 0 auto 60px;
+    background-color: var(--sub);
+    background-image: url(/img/rogo_touka.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+.purchase_item{
+    width: min(960px,90%);
+    height: 106px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    border-bottom: solid 1px rgba(51, 51, 51, .2);
+    font-size: clamp(14px,2vw,16px);
+}
+.purchase_item .item_img{
+    width: 120px;
+    height: auto;
+    aspect-ratio: 4/3;
+    background-position: center;
+    background-size: cover;
+    margin: 0 8px 0 0;
+}
+.purchase_item:nth-of-type(1) .item_img{
+    background-image: url(/img/millecrepe.jpg);
+}
+.purchase_item:nth-of-type(2) .item_img{
+    background-image: url(/img/shortcake.jpg);
+}
+.purchase_item:nth-of-type(3) .item_img{
+    background-image: url(/img/anniversary.jpg);
+}
+.purchase_item:nth-of-type(4) .item_img{
+    background-image: url(/img/cookie.jpg);
+}
+.purchase_item:nth-of-type(5) .item_img{
+    background-image: url(/img/candy.jpg);
+}
+.purchase_item:nth-of-type(6) .item_img{
+    background-image: url(/img/montblanc.jpg);
+}
+.purchase_item h3,
+.purchase_text_flex h3{
+    width: 186px;
+	font-size: 16px;
+    margin-right: 8px;
+}
+.purchase_item p,
+.purchase_text_flex p{
+    width: 64px;
+    text-align: right;
+    margin-right: 8px;
+}
+.purchase_item .ko,
+.purchase_text_flex .ko{
+    width: 48px;
+}
+.purchase_text_flex{
+    width: min(960px,90%);
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+.space{
+    width: 120px;
+    height: auto;
+    aspect-ratio: 4/3;
+    background-color: rgba(0,0,0,0);
+}
+.caution{
+    width: min(916px,90%);
+    margin: 0 auto;
+    text-align: left;
+    line-height: 14px;
+}
+.caution small{
+    font-size: 14px;
+}
+.purchase .text_center{
+    text-align: center;
+}
+.purchase span{
+    color: var(--accent);
+}
+form{
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+    font-size: 14px;
+    text-align: left;
+}
+.check_block{
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+.form_flex{
+    width: 240px;
+    gap: 24px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form_flex button{
+    font-size: 14px;
+}
+.submit{
+    width: 200px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: var(--accent);
+    line-height: 32px;
+    text-align: center;
+    background: linear-gradient(90deg, #e6c24c 0%, #ffdf86 100%);
+    border: solid 1px rgba(230, 194, 76, .2);
+    font-size: 16px;
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.4s;
+    box-shadow: 0 2px 4px rgba(160, 160, 160, 0.5);
+}
+.submit:hover{
+    background: linear-gradient(90deg, #ffefbc 0%, #ffd448 100%);
+    color: #999999;
+    transform: scale(1.05);
+}
+.info{
+    display: block;
+    width: fit-content;
+    font-size: 12px;
+    margin: 0 auto;
+}
+@media screen and (max-width:401px){
+    .purchase_h1{
+        width: 120px;
+        height: 49.7px;
+        margin-top: 6px;
+    }
+}

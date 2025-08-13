@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnackLab</title>
+    <meta name="description" content="カート機能のWebアプリ制作。架空のお菓子販売サイト"><!-- サイト説明。全角50～80文字(スマホ。PCは120前後まで) -->
+    <meta name="author" content="チームSnackLab"><!-- サイト作者 -->
+    <meta name="format-detection" content="email=no,telephone=no,address=no"><!-- メアド・電話番号・住所の自動リンク拒否 -->
+    <meta name="robots" content="noindex,nofollow"><!-- インデックスとリンク拒否 -->
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <div class="hedaer_inner">
+        <a href="#"><h1></h1></a>
+        <nav>
+            <ul>
+                <li><a href="#"><img src="/img/home.png" alt="トップへ戻る" width="32px" height="32px"></a></li>
+                <li><button type="button" id="cartButton" class="cart-icon"><img src="/img/cart.png" alt="カートの中身をチェック" width="28px" height="28px"></button></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- カートの中身(スライドメニュー) -->
+    <div id="cartMenu" class="cart-menu">
+        <br><br>
+        <h2>カートの中身</h2>
+        <div class="cart_text">
+            <div class="cart_item_box">
+                <div class="cart_item">
+                    <p class="name" style="display: none;">ミルクレープ</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p><!-- ここに整数値が入ると、カート内に項目ごと表示される -->
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+
+                <div class="cart_item">
+                    <p class="name" style="display: none;">ショートケーキ(H)</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p>
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+
+                <div class="cart_item">
+                    <p class="name" style="display: none;">アニバーサリーケーキ</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p>
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+
+                <div class="cart_item">
+                    <p class="name" style="display: none;">クッキー</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p>
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+
+                <div class="cart_item">
+                    <p class="name" style="display: none;">季節のキャンディー</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p>
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+
+                <div class="cart_item">
+                    <p class="name" style="display: none;">モンブラン</p>
+                    <div class="layout">
+                        <button type="button" class="plus" style="display: none;">＋</button>
+                        <button type="button" class="minus" style="display: none;">－</button>
+                        <p class="count"></p>
+                        <p class="ko" style="display: none;">個</p>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <div class="text_flex">
+                <h3>個数合計</h3><p class="p1"></p><p class="ko" style="display: none;">個</p>
+            </div>
+            <div class="text_flex">
+                <h3>金額合計(税込み)</h3><p class="p1"></p><p class="ko" style="display: none;">円</p>
+            </div>
+            <br><br>
+			
+			<form id="sendForm" th:action="@{/purchasePage}" method="post">
+						    
+				<!-- JavaScriptでhiddenフィールドを追加する場所 -->
+				<span id="hiddenFields"></span>
+
+				<!-- 送信ボタン -->
+				<button type="submit" class="checkout">レジに進む</button>
+			</form>
+						
+            <button type="reset" class="reset">カートをリセット</button>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="mainvisual"></div>
+    <h2>オンラインショップへようこそ</h2>
+    <section class="items">
+        <div class="item fadein_fast">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-1'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>ミルクレープ</dt>
+                    <dd>
+                        <p>何層も重なる、<br>やさしさのミルフィーユ</p>
+                        <br>
+                        <span class="price">&ensp;&yen;600</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="item fadein">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-2'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>ショートケーキ(ホール)</dt>
+                    <dd>
+                        <p>みんなで楽しむ、<br>いちごたっぷり定番ケーキ</p>
+                        <br>
+                        <span class="price">&ensp;&yen;3,500</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="item fadein_slow">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-3'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>アニバーサリーケーキ</dt>
+                    <dd>
+                        <p>お祝いの気持ちをカラフルに包む、<br>記念日スペシャル</p>
+                        <br>
+                        <span class="price">&ensp;&yen;1,200</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="item fadein_fast">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-4'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>クッキー</dt>
+                    <dd>
+                        <p>選ぶのも楽しい！<br>手のひらサイズの小さな幸せ</p>
+                        <br>
+                        <span class="price">&ensp;&yen;400</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="item fadein">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-5'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>季節のキャンディー</dt>
+                    <dd>
+                        <p>季節の色でおめかし、<br>ワクワクキャンディー</p>
+                        <br>
+                        <span class="price">&ensp;&yen;500</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="item fadein_slow">
+            <a class="click-btn modal-toggle modal-span" data-modal='modal-6'><div class="item_img"></div></a>
+            <div class="item_text">
+                <dl>
+                    <dt>モンブラン</dt>
+                    <dd>
+                        <p>栗とクリームの贅沢な秋の味わい</p>
+                        <br>
+                        <span class="price">&ensp;&yen;800</span>
+                        <button type="button" class="cart">カートに入れる</button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <small>&copy; SnackLab -お菓子のECサイト- All Rights Reserved.</small>
+</footer>
+
+<div class="modal01">
+    <div class="modal-outer" id="modal-1">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>ミルクレープ</dt>
+                        <br class="none">
+                        <dd>
+                            <p>ふわふわクレープととろけるクリームが、まるで仲良しさんのミルフィーユ！<br>
+                                一口ごとに重なる幸せ、数えてみてね。<br>
+                                今日は何層目の気分？<br>
+                                お花みたいに広がる断面に、思わず写真を撮りたくなっちゃう♪</p>
+                            <br>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal02">
+    <div class="modal-outer" id="modal-2">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>ショートケーキ(ホール)</dt>
+                        <br class="none">
+                        <dd>
+                            <p>みんなの人気者、いちごのショートケーキがホールで登場！<br>
+                                甘酸っぱい恋の味、みんなで分けても、ひとりじめしてもOK♡<br>
+                                ふわふわスポンジとクリームのハーモニーで、パーティーの主役になれること間違いなし！</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal03">
+    <div class="modal-outer" id="modal-3">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>アニバーサリーケーキ</dt>
+                        <br class="none">
+                        <dd>
+                            <p>おめでとうの気持ちをたっぷり詰め込んだ、特別な日のためのケーキです。<br>
+                                ろうそくの数だけ願いごと、ケーキの大きさだけハッピーを！<br>
+                                カラフルなデコレーションで、思い出の1ページをさらにキラキラに彩ります。</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal04">
+    <div class="modal-outer" id="modal-4">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>クッキー</dt>
+                        <br class="none">
+                        <dd>
+                            <p>サクサク、ほろほろ、手のひらサイズの小さな魔法。<br>
+                                ひとつ食べたら止まらない、あなたの毎日に小さなごほうびを♪<br>
+                                かわいい形やお顔のクッキーも！選ぶのも楽しいおやつタイムに！</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal05">
+    <div class="modal-outer" id="modal-5">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>季節のキャンディー</dt>
+                        <br class="none">
+                        <dd>
+                            <p>季節ごとにおめかしする、カラフルなキャンディーたち。<br>
+                                春はピンク、夏はブルー、今日はどんな色に出会えるかな？<br>
+                                袋を開けるたびに、ちいさなワクワクがはじけるよ。<br>
+                                お友だちへのプレゼントにもぴったり！</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal06">
+    <div class="modal-outer" id="modal-6">
+        <button type="button" class="close-btn"><img src="/img/return_white.png" alt="戻る" width="28px" height="28px"></button>
+        <div class="modal-inner">
+            <div class="modal-inner-container">
+                <div class="item_img_l"></div>
+                <div class="modal_text">
+                    <dl>
+                        <br class="none">
+                        <dt>モンブラン</dt>
+                        <br class="none">
+                        <dd>
+                            <p>栗の帽子をかぶったおしゃれさん。<br>
+                                ふわふわクリームとほっくりマロン、秋のごちそうをぎゅっと詰め込みました。<br>
+                                ちょっと大人な甘さにうっとり♡<br>
+                                シュークリームのトッピングで贅沢な一品に</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--main.jsでCSVのデータを展開して使うための<script>-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var csvDataFromServer = /*[[${snacks}]]*/ '';
+    /*]]>*/
+</script>
+
+<script src="/main.js"></script>
+</body>
+</html>
